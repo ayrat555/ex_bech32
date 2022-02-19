@@ -1,0 +1,14 @@
+[package]
+name = "exbech32"
+version = "0.1.0"
+authors = []
+edition = "2018"
+
+[lib]
+name = "exbech32"
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+rustler = "0.23.0"
+bech32 = "0.8"
