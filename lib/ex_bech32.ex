@@ -25,8 +25,14 @@ defmodule ExBech32 do
       {:ok, "bech32m1qqqsyy9kzpq"}
   """
   @spec encode(String.t(), binary(), atom()) :: {:ok, String.t()} | {:error, atom()}
-  def encode(hrp, data, variant \\ :bech32) when variant in [:bech32, :bech32m] do
+  def encode(hrp, data, variant \\ :bech32)
+
+  def encode(hrp, data, variant) when variant in [:bech32, :bech32m] do
     Impl.encode(hrp, data, Atom.to_string(variant))
+  end
+
+  def encode(hrp, data, variant) do
+    {:error, :unknown_variant}
   end
 
   @doc """

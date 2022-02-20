@@ -41,7 +41,7 @@ fn decode<'a>(env: Env<'a>, encoded: String) -> Term<'a> {
 
             let string_variant = variant_to_string(variant);
 
-            (atoms::ok(), (hrp, erl_bin.encode(env), string_variant)).encode(env)
+            (atoms::ok(), (hrp, erl_bin.release(env), string_variant)).encode(env)
         }
 
         Err(_) => (atoms::error(), atoms::decode_error()).encode(env),
