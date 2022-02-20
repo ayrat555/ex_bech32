@@ -31,7 +31,7 @@ defmodule ExBech32 do
     Impl.encode(hrp, data, Atom.to_string(variant))
   end
 
-  def encode(hrp, data, variant) do
+  def encode(_hrp, _data, _variant) do
     {:error, :unknown_variant}
   end
 
