@@ -1,11 +1,12 @@
 # ExBech32
 
-**TODO: Add description**
+Nif for Bech32 format encoding and decoding.
+
+It uses https://github.com/rust-bitcoin/rust-bech32 rust library
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ex_bech32` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `ex_bech32` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +16,18 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/ex_bech32>.
+## Docs
 
+The docs can be found at [https://hexdocs.pm/ex_bech32](https://hexdocs.pm/ex_bech32).
+
+## Contributing
+
+1. [Fork it!](https://github.com/ayrat555/ex_bech32)
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+## Author
+
+Ayrat Badykov (@ayrat555)
