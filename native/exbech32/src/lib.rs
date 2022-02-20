@@ -26,7 +26,7 @@ fn encode<'a>(env: Env<'a>, hrp: String, data: Binary, string_variant: String) -
     };
 
     let mut u5_vec = data.as_slice().to_base32();
-    u5_vec.insert(0, u5::try_from_u8(0).unwrap());
+    u5_vec.insert(0, u5::try_from_u8(1).unwrap());
 
     match bech32::encode(&hrp, u5_vec, variant) {
         Err(_) => (atoms::error(), atoms::encode_error()).encode(env),
