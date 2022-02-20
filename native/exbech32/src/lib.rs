@@ -1,3 +1,4 @@
+use bech32::u5;
 use bech32::FromBase32;
 use bech32::ToBase32;
 use bech32::Variant;
@@ -24,7 +25,10 @@ fn encode<'a>(env: Env<'a>, hrp: String, data: Binary, string_variant: String) -
         Err(err) => return err,
     };
 
-    match bech32::encode(&hrp, data.as_slice().to_base32(), variant) {
+    let mut u5_vec = data.as_slice().to_base32();
+    u5_vec.insert(0, u5::try_from_u8(0).unwrap());
+
+    match bech32::encode(&hrp, u5_vec, variant) {
         Err(_) => (atoms::error(), atoms::encode_error()).encode(env),
         Ok(encoded) => (atoms::ok(), encoded.to_string()).encode(env),
     }
