@@ -42,18 +42,23 @@ fn encode<'a>(env: Env<'a>, hrp: String, data: Binary, string_variant: String) -
 #[rustler::nif]
 fn decode_with_version<'a>(env: Env<'a>, encoded: String) -> Term<'a> {
     match do_decode(env, encoded) {
-        Ok((hrp, base32_data, variant)) => {
-            let mut actual_data = Vec::<u8>::from_base32(&base32_data).unwrap();
-            let version = actual_data.split_off(1);
+        Ok((hrp, mut base32_data, variant)) => {
+            let actual_data = base32_data.split_off(1);
+            let u8_actual_data = Vec::<u8>::from_base32(&actual_data).unwrap();
 
-            let mut erl_bin: OwnedBinary = OwnedBinary::new(actual_data.len()).unwrap();
-            erl_bin.as_mut_slice().copy_from_slice(&actual_data);
+            let mut erl_bin: OwnedBinary = OwnedBinary::new(u8_actual_data.len()).unwrap();
+            erl_bin.as_mut_slice().copy_from_slice(&u8_actual_data);
 
             let string_variant = variant_to_string(variant);
 
             (
                 atoms::ok(),
-                (hrp, version[0], erl_bin.release(env), string_variant),
+                (
+                    hrp,
+                    base32_data[0].to_u8(),
+                    erl_bin.release(env),
+                    string_variant,
+                ),
             )
                 .encode(env)
         }

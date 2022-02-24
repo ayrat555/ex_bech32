@@ -25,4 +25,22 @@ defmodule ExBech32Test do
       assert {:ok, {"aaa", "mydata", :bech32m}} == ExBech32.decode("aaa1d4ukgct5vy2lnqhg")
     end
   end
+
+  describe "encode_with_version/4" do
+    test "encodes data with version to bech32" do
+      assert {:ok, "aaa1qd4ukgct5vykktzex"} ==
+               ExBech32.encode_with_version("aaa", 0, "mydata", :bech32)
+
+      assert {:ok, "aaa1pd4ukgct5vy48rnfa"} ==
+               ExBech32.encode_with_version("aaa", 1, "mydata", :bech32)
+    end
+
+    test "encodes data with version to bech32m" do
+      assert {:ok, "aaa1qd4ukgct5vyr2mwuy"} ==
+               ExBech32.encode_with_version("aaa", 0, "mydata", :bech32m)
+
+      assert {:ok, "aaa1pd4ukgct5vyqmnlvl"} ==
+               ExBech32.encode_with_version("aaa", 1, "mydata", :bech32m)
+    end
+  end
 end
