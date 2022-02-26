@@ -24,3 +24,6 @@ ex_bech32-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+/priv/native/*
+/native/exbech32/target/*

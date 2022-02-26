@@ -24,7 +24,7 @@ defmodule ExBech32.MixProject do
 
   defp deps do
     [
-      {:rustler, "~> 0.23"},
+      {:rustler, "~> 0.24"},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
