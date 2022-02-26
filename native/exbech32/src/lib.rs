@@ -2,10 +2,10 @@ use bech32::u5;
 use bech32::FromBase32;
 use bech32::ToBase32;
 use bech32::Variant;
+use rustler::types::binary::NewBinary;
 use rustler::Binary;
 use rustler::Encoder;
 use rustler::Env;
-use rustler::OwnedBinary;
 use rustler::Term;
 
 mod atoms {
@@ -46,7 +46,7 @@ fn decode_with_version<'a>(env: Env<'a>, encoded: String) -> Term<'a> {
             let actual_data = base32_data.split_off(1);
             let u8_actual_data = Vec::<u8>::from_base32(&actual_data).unwrap();
 
-            let mut erl_bin: OwnedBinary = OwnedBinary::new(u8_actual_data.len()).unwrap();
+            let mut erl_bin = NewBinary::new(env, u8_actual_data.len());
             erl_bin.as_mut_slice().copy_from_slice(&u8_actual_data);
 
             let string_variant = variant_to_string(variant);
@@ -56,7 +56,7 @@ fn decode_with_version<'a>(env: Env<'a>, encoded: String) -> Term<'a> {
                 (
                     hrp,
                     base32_data[0].to_u8(),
-                    erl_bin.release(env),
+                    Binary::from(erl_bin),
                     string_variant,
                 ),
             )
@@ -73,12 +73,12 @@ fn decode<'a>(env: Env<'a>, encoded: String) -> Term<'a> {
         Ok((hrp, base32_data, variant)) => {
             let slice_data = Vec::<u8>::from_base32(&base32_data).unwrap();
 
-            let mut erl_bin: OwnedBinary = OwnedBinary::new(slice_data.len()).unwrap();
+            let mut erl_bin = NewBinary::new(env, slice_data.len());
             erl_bin.as_mut_slice().copy_from_slice(&slice_data);
 
             let string_variant = variant_to_string(variant);
 
-            (atoms::ok(), (hrp, erl_bin.release(env), string_variant)).encode(env)
+            (atoms::ok(), (hrp, Binary::from(erl_bin), string_variant)).encode(env)
         }
 
         Err(error) => return error,
