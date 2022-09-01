@@ -2,10 +2,10 @@ use bech32::u5;
 use bech32::FromBase32;
 use bech32::ToBase32;
 use bech32::Variant;
-use rustler::types::binary::NewBinary;
 use rustler::Binary;
 use rustler::Encoder;
 use rustler::Env;
+use rustler::NewBinary;
 use rustler::Term;
 
 mod atoms {
