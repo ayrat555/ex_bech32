@@ -1,3 +1,7 @@
+# 0.3.0
+
+  * Update rustler and bech32 crates
+
 # 0.2.0
 
   * Update rustler to 0.24
