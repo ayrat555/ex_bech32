@@ -1,3 +1,9 @@
+# 0.5.0
+
+  * Use rustler_precompiled (https://github.com/ayrat555/ex_bech32/pull/22)
+
+  Rust is not required anymore
+
 # 0.4.0
 
   * Update rustler to 0.26.0

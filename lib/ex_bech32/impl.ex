@@ -1,6 +1,8 @@
 defmodule ExBech32.Impl do
   @moduledoc false
 
+  version = Mix.Project.config()[:version]
+
   use RustlerPrecompiled,
     otp_app: :ex_bech32,
     crate: :ex_bech32,
