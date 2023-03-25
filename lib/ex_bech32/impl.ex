@@ -3,7 +3,7 @@ defmodule ExBech32.Impl do
 
   use RustlerPrecompiled,
     otp_app: :ex_bech32,
-    crate: :exbech32,
+    crate: :ex_bech32,
     base_url: "https://github.com/ayrat555/ex_bech32/releases/download/v#{version}",
     force_build: System.get_env("EX_BECH32_BUILD") in ["1", "true"],
     version: version
