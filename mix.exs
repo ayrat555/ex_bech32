@@ -50,13 +50,14 @@ defmodule ExBech32.MixProject do
       },
       files: [
         "lib",
-        "native/exbech32/.cargo",
-        "native/exbech32/src",
-        "native/exbech32/Cargo.toml",
-        "native/exbech32/Cargo.lock",
+        "native/ex_bech32/.cargo",
+        "native/ex_bech32/src",
+        "native/ex_bech32/Cargo.toml",
+        "native/ex_bech32/Cargo.lock",
         "mix.exs",
         "README.md",
-        "LICENSE"
+        "LICENSE",
+        "checksum-*.exs"
       ]
     ]
   end
