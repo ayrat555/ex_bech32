@@ -5,7 +5,7 @@ authors = []
 edition = "2018"
 
 [lib]
-name = "exbech32"
+name = "ex_bech32"
 path = "src/lib.rs"
 crate-type = ["cdylib"]
 
