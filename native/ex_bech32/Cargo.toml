@@ -1,5 +1,5 @@
 [package]
-name = "exbech32"
+name = "ex_bech32"
 version = "0.1.0"
 authors = []
 edition = "2018"
