@@ -1,14 +1,14 @@
 [package]
-name = "exbech32"
+name = "ex_bech32"
 version = "0.1.0"
 authors = []
 edition = "2018"
 
 [lib]
-name = "exbech32"
+name = "ex_bech32"
 path = "src/lib.rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-rustler = "0.26"
-bech32 = "0.9"
+rustler = "0.27"
+bech32 = "0.9.1"

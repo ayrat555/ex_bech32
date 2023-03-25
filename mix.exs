@@ -3,12 +3,14 @@ defmodule ExBech32.MixProject do
 
   @source_url "https://github.com/ayrat555/ex_bech32"
 
+  @version "0.5.0"
+
   def project do
     [
       app: :ex_bech32,
       name: "ExBech32",
-      version: "0.4.0",
-      elixir: "~> 1.13",
+      version: @version,
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: package(),
@@ -24,10 +26,11 @@ defmodule ExBech32.MixProject do
 
   defp deps do
     [
-      {:rustler, "~> 0.26"},
       {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
+      {:rustler, ">= 0.0.0", optional: true},
+      {:rustler_precompiled, "~> 0.6"}
     ]
   end
 
@@ -47,13 +50,14 @@ defmodule ExBech32.MixProject do
       },
       files: [
         "lib",
-        "native/exbech32/.cargo",
-        "native/exbech32/src",
-        "native/exbech32/Cargo.toml",
-        "native/exbech32/Cargo.lock",
+        "native/ex_bech32/.cargo",
+        "native/ex_bech32/src",
+        "native/ex_bech32/Cargo.toml",
+        "native/ex_bech32/Cargo.lock",
         "mix.exs",
         "README.md",
-        "LICENSE"
+        "LICENSE",
+        "checksum-*.exs"
       ]
     ]
   end
