@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       MIX_ENV: test
-      EX_BECH32_BUILD: "1"
+      RUSTLER_BUILD: "1"
 
     name: Elixir ${{ matrix.pair.elixir }} / OTP ${{ matrix.pair.otp }}
 
@@ -24,15 +24,6 @@ jobs:
               otp: 24.0.2
           - pair:
               elixir: 1.12.1
-              otp: 23.3.1
-          - pair:
-              elixir: 1.11.4
-              otp: 23.3.1
-          - pair:
-              elixir: 1.11.4
-              otp: 24.0.2
-          - pair:
-              elixir: 1.10.4
               otp: 23.3.1
           - pair:
               elixir: 1.10.4
