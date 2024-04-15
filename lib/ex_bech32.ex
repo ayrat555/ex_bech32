@@ -43,7 +43,7 @@ defmodule ExBech32 do
       {:ok, {"bc", 0, <<155, 40, 145, 113, 34, 76, 127, 94, 72, 185, 33, 104, 237, 9, 209, 84, 242, 199, 72, 211>>}}
   """
   @spec decode_with_version(String.t()) ::
-          {:ok, {String.t(), non_neg_integer(), binary(), atom()}} | {:error, atom()}
+          {:ok, {String.t(), non_neg_integer(), binary()}} | {:error, atom()}
   def decode_with_version(encoded) do
     Impl.decode_with_version(encoded)
   end
