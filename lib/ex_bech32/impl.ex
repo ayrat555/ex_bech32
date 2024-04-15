@@ -13,7 +13,7 @@ defmodule ExBech32.Impl do
 
   def encode(_hrp, _data, _variant), do: :erlang.nif_error(:nif_not_loaded)
 
-  def encode_with_version(_hrp, _version, _data, _variant), do: :erlang.nif_error(:nif_not_loaded)
+  def encode_with_version(_hrp, _version, _data), do: :erlang.nif_error(:nif_not_loaded)
 
   def decode(_encoded), do: :erlang.nif_error(:nif_not_loaded)
 

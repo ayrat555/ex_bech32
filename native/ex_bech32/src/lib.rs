@@ -1,9 +1,5 @@
-// use bech32::FromBase32;
-// use bech32::ToBase32;
-// use bech32::Variant;
-use bech32::Bech32;
-use bech32::Bech32m;
-use bech32::Checksum;
+use bech32::segwit;
+use bech32::Fe32;
 use bech32::Hrp;
 use rustler::Binary;
 use rustler::Encoder;
@@ -18,7 +14,8 @@ mod atoms {
         encode_error,
         decode_error,
         invalid_variant,
-        invalid_hrp
+        invalid_hrp,
+        invalid_version
     }
 }
 
@@ -28,106 +25,52 @@ fn encode_with_version<'a>(
     hrp_string: String,
     version: u8,
     data: Binary,
-    string_variant: String,
 ) -> Term<'a> {
-    let mut data_bytes = vec![0, 13, 21, 28, 22, 8, 24, 11, 20, 12, 4];
-    data_bytes.insert(0, version);
-
-    eprintln!("{:?}", data_bytes);
-
     let hrp = match Hrp::parse(&hrp_string) {
         Ok(hrp) => hrp,
         Err(_) => return (atoms::error(), atoms::invalid_hrp()).encode(env),
     };
 
-    eprintln!("{:?}", hrp);
-
-    let result = match string_variant.as_str() {
-        "bech32" => bech32::encode::<Bech32>(hrp, &data_bytes),
-        "bech32m" => bech32::encode::<Bech32m>(hrp, &data_bytes),
-        _ => return (atoms::error(), atoms::invalid_variant()).encode(env),
+    let version = match parse_version(env, version) {
+        Ok(version) => version,
+        Err(_) => return (atoms::error(), atoms::invalid_version()).encode(env),
     };
 
-    match result {
+    match segwit::encode(hrp, version, data.as_slice()) {
         Err(_) => (atoms::error(), atoms::encode_error()).encode(env),
         Ok(encoded) => (atoms::ok(), encoded.to_string()).encode(env),
     }
 }
 
-// #[rustler::nif]
-// fn encode<'a>(env: Env<'a>, hrp: String, data: Binary, string_variant: String) -> Term<'a> {
-//     let u5_vec = data.as_slice().to_base32();
+#[rustler::nif]
+fn decode_with_version<'a>(env: Env<'a>, encoded: String) -> Term<'a> {
+    match segwit::decode(&encoded) {
+        Ok((hrp, version, data)) => {
+            let mut erl_bin = NewBinary::new(env, data.len());
+            erl_bin.as_mut_slice().copy_from_slice(&data);
 
-//     do_encode(env, &hrp, u5_vec, string_variant)
-// }
+            (
+                atoms::ok(),
+                (hrp.as_str(), version.to_u8(), Binary::from(erl_bin)),
+            )
+                .encode(env)
+        }
 
-// #[rustler::nif]
-// fn decode_with_version<'a>(env: Env<'a>, encoded: String) -> Term<'a> {
-//     match do_decode(env, encoded) {
-//         Ok((hrp, mut base32_data, variant)) => {
-//             let actual_data = base32_data.split_off(1);
-//             let u8_actual_data = Vec::<u8>::from_base32(&actual_data).unwrap();
+        Err(_error) => (atoms::error(), atoms::decode_error()).encode(env),
+    }
+}
 
-//             let mut erl_bin = NewBinary::new(env, u8_actual_data.len());
-//             erl_bin.as_mut_slice().copy_from_slice(&u8_actual_data);
+fn parse_version<'a>(env: Env<'a>, version: u8) -> Result<Fe32, Term<'a>> {
+    let version = match version {
+        0 => segwit::VERSION_0,
+        1 => segwit::VERSION_1,
+        _ => return Err((atoms::error(), atoms::invalid_version()).encode(env)),
+    };
 
-//             let string_variant = variant_to_string(variant);
+    Ok(version)
+}
 
-//             (
-//                 atoms::ok(),
-//                 (
-//                     hrp,
-//                     base32_data[0].to_u8(),
-//                     Binary::from(erl_bin),
-//                     string_variant,
-//                 ),
-//             )
-//                 .encode(env)
-//         }
-
-//         Err(error) => return error,
-//     }
-// }
-
-// #[rustler::nif]
-// fn decode<'a>(env: Env<'a>, encoded: String) -> Term<'a> {
-//     match do_decode(env, encoded) {
-//         Ok((hrp, base32_data, variant)) => {
-//             let slice_data = Vec::<u8>::from_base32(&base32_data).unwrap();
-
-//             let mut erl_bin = NewBinary::new(env, slice_data.len());
-//             erl_bin.as_mut_slice().copy_from_slice(&slice_data);
-
-//             let string_variant = variant_to_string(variant);
-
-//             (atoms::ok(), (hrp, Binary::from(erl_bin), string_variant)).encode(env)
-//         }
-
-//         Err(error) => return error,
-//     }
-// }
-
-// fn do_encode<'a>(env: Env<'a>, hrp: &str, data: Vec<u5>, string_variant: String) -> Term<'a> {}
-
-// fn do_decode<'a>(env: Env<'a>, encoded: String) -> Result<(String, Vec<u5>, Variant), Term<'a>> {
-//     let decoded = bech32::decode(&encoded);
-
-//     if let Err(_) = decoded {
-//         return Err((atoms::error(), atoms::decode_error()).encode(env));
-//     }
-
-//     Ok(decoded.unwrap())
-// }
-
-// fn variant_to_string(variant: Variant) -> String {
-//     match variant {
-//         Variant::Bech32 => "bech32".to_string(),
-//         Variant::Bech32m => "bech32m".to_string(),
-//     }
-// }
-
-// fn string_to_variant<'a, T: Checksum>(env: Env<'a>, string_variant: String) -> Result<T, Term<'a>> {
-
-// }
-
-rustler::init!("Elixir.ExBech32.Impl", [encode_with_version]);
+rustler::init!(
+    "Elixir.ExBech32.Impl",
+    [encode_with_version, decode_with_version]
+);
