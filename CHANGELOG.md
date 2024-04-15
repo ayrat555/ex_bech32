@@ -1,3 +1,7 @@
+# 0.6.0
+
+  * Update crate from 0.9 to 0.11 and ruslter to 0.32 (https://github.com/ayrat555/ex_bech32/pull/28)
+
 # 0.5.0
 
   * Use rustler_precompiled (https://github.com/ayrat555/ex_bech32/pull/22)
