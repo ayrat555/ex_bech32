@@ -1,6 +1,6 @@
-use bech32::segwit;
 use bech32::Fe32;
 use bech32::Hrp;
+use bech32::segwit;
 use rustler::Binary;
 use rustler::Encoder;
 use rustler::Env;
@@ -70,7 +70,4 @@ fn parse_version<'a>(env: Env<'a>, version: u8) -> Result<Fe32, Term<'a>> {
     Ok(version)
 }
 
-rustler::init!(
-    "Elixir.ExBech32.Impl",
-    [encode_with_version, decode_with_version]
-);
+rustler::init!("Elixir.ExBech32.Impl");
