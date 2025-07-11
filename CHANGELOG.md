@@ -1,3 +1,7 @@
+# 0.6.2
+
+  * Update rultler to 0.36 (https://github.com/ayrat555/ex_bech32/pull/29)
+
 # 0.6.1
 
   * Fix dialyzer warning
