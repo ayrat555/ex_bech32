@@ -30,7 +30,7 @@ defmodule ExBech32.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:rustler, ">= 0.0.0", optional: true},
-      {:rustler_precompiled, "~> 0.7"}
+      {:rustler_precompiled, "~> 0.8"}
     ]
   end
 
