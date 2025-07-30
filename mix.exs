@@ -3,7 +3,7 @@ defmodule ExBech32.MixProject do
 
   @source_url "https://github.com/ayrat555/ex_bech32"
 
-  @version "0.6.2"
+  @version "0.6.3"
 
   def project do
     [

@@ -11,7 +11,7 @@ The package can be installed by adding `ex_bech32` to your list of dependencies 
 ```elixir
 def deps do
   [
-    {:ex_bech32, "~> 0.6.2"}
+    {:ex_bech32, "~> 0.6.3"}
   ]
 end
 ```
