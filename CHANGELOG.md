@@ -1,3 +1,7 @@
+# 0.6.4
+
+  * update rustler and bech32 crates (https://github.com/ayrat555/ex_bech32/pull/50)
+
 # 0.6.3
 
   * use ubuntu 22.04 as builder insead of 24.04 to support older OSes (https://github.com/ayrat555/ex_bech32/pull/33)
