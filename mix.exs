@@ -10,7 +10,7 @@ defmodule ExBech32.MixProject do
       app: :ex_bech32,
       name: "ExBech32",
       version: @version,
-      elixir: "~> 1.10",
+      elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: package(),
